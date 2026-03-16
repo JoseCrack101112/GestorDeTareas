@@ -17,7 +17,8 @@ namespace GestorTareasGUI1
 
             public override string ToString()
             {
-                return $"{Nombre} - {Fecha.ToShortDateString()} {(Completada ? "[✔]" : "[ ]")}";
+                string estado = Completada ? "Sí" : "No";
+                return $"{Nombre} | {Descripcion} | {Fecha.ToShortDateString()} | Completada: {estado}";
             }
         }
     }

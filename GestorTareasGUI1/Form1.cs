@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using static GestorTareasGUI1.Class1;
 
-
 namespace GestorTareasGUI1
 {
 
@@ -48,15 +47,25 @@ namespace GestorTareasGUI1
             };
 
             tareas.Add(t);
-            lstTareas.Items.Add(t);
+
+           
+            string prioridad = chkPrioridadAlta.Checked ? "Alta" : "Normal";
+            string categoria = cmbCategoria.Text;
+
+            Papi.Items.Add($"[{prioridad}] {t.Nombre} | {categoria} | {t.Fecha.ToShortDateString()}");
+
+           
+            lblContadorTareas.Text = "Total tareas: " + Papi.Items.Count;
         }
 
         private void btnEliminar_Click(object sender, EventArgs e)
         {
-            if (lstTareas.SelectedItem != null)
+            if (Papi.SelectedItem != null)
             {
-                tareas.Remove((Tarea)lstTareas.SelectedItem);
-                lstTareas.Items.Remove(lstTareas.SelectedItem);
+                tareas.Remove((Tarea)tareas[Papi.SelectedIndex]);
+                Papi.Items.Remove(Papi.SelectedItem);
+
+                lblContadorTareas.Text = "Total tareas: " + Papi.Items.Count;
             }
             else
             {
@@ -66,15 +75,46 @@ namespace GestorTareasGUI1
 
         private void btnCompletar_Click(object sender, EventArgs e)
         {
-            if (lstTareas.SelectedItem != null)
+            if (Papi.SelectedItem != null)
             {
-                Tarea t = (Tarea)lstTareas.SelectedItem;
+                Tarea t = tareas[Papi.SelectedIndex];
                 t.Completada = true;
 
-                int index = lstTareas.SelectedIndex;
-                lstTareas.Items[index] = t; // Actualiza el ListBox
+                int index = Papi.SelectedIndex;
+                Papi.Items[index] = "✔ " + Papi.Items[index].ToString();
             }
         }
 
+        private void dtFecha_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            cmbCategoria.Items.Add("Trabajo");
+            cmbCategoria.Items.Add("Personal");
+            cmbCategoria.Items.Add("Estudios");
+
+            lblContadorTareas.Text = "Total tareas: 0";
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label5_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnLimpiarCampos_Click(object sender, EventArgs e)
+        {
+            txtNombre.Clear();
+            txtDescripcion.Clear();
+            chkPrioridadAlta.Checked = false;
+            cmbCategoria.SelectedIndex = -1;
+        }
     }
 }
