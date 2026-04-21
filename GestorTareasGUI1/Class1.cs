@@ -20,6 +20,7 @@ namespace GestorTareasGUI1
                 string estado = Completada ? "Sí" : "No";
                 return $"{Nombre} | {Descripcion} | {Fecha.ToShortDateString()} | Completada: {estado}";
             }
+		 public List<string> Etiquetas { get; set; } = new List<string>();
         }
     }
 }
